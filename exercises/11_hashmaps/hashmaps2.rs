@@ -29,14 +29,23 @@ fn fruit_basket(basket: &mut HashMap<Fruit, u32>) {
     ];
 
     for fruit in fruit_kinds {
+        basket.entry(fruit).and_modify(|num| *num = if *num < 1 { 3} else {*num}).or_insert(10);
         // TODO: Insert new fruits if they are not already present in the
         // basket. Note that you are not allowed to put any type of fruit that's
         // already present!
     }
 }
-
+fn get_fruit_basket() -> HashMap<Fruit, u32> {
+        let content = [(Fruit::Apple, 4), (Fruit::Mango, 0), (Fruit::Lychee, 5)];
+        HashMap::from_iter(content)
+    }
 fn main() {
     // You can optionally experiment here.
+    let mut basket = get_fruit_basket();
+    fruit_basket(&mut basket);
+    for (key, value) in &basket {
+        println!("{key:?}: {value}");
+    }
 }
 
 #[cfg(test)]
