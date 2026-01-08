@@ -14,7 +14,7 @@
 // There are at least two ways to implement this that are both correct. But one
 // is a lot shorter!
 
-use std::num::ParseIntError;
+use std::{f32::consts::E, num::ParseIntError};
 
 fn total_cost(item_quantity: &str) -> Result<i32, ParseIntError> {
     let processing_fee = 1;
@@ -22,12 +22,23 @@ fn total_cost(item_quantity: &str) -> Result<i32, ParseIntError> {
 
     // TODO: Handle the error case as described above.
     let qty = item_quantity.parse::<i32>();
+    if let Ok(qty) = qty{
+        Ok(qty * cost_per_item + processing_fee)
+    } else {
+        qty
+    }
 
-    Ok(qty * cost_per_item + processing_fee)
 }
 
 fn main() {
-    // You can optionally experiment here.
+    let values = vec!["","123", "Tadgadhe","beep boop"];
+    for (i, val) in values.iter().enumerate() {
+        if let Ok(result) = total_cost(val){
+            println!("{val} costs {result}.");
+        } else {
+            println!("Invalid item quantity: {val}");
+        }
+    }
 }
 
 #[cfg(test)]
